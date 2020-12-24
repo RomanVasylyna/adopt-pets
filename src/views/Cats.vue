@@ -35,5 +35,3 @@ computed: {
 
 }
 </script>
-
-
