@@ -2,13 +2,16 @@
   <div class="home">
 
   <h1>Adopt a new best friend</h1>
-  
+
+  <!-- <p>Cats Total : {{ getAllCats.length }}</p> -->
+  <p>Total : {{ animalsCount }}</p>
+
   <!-- Form Toggler -->
   <button class="btn btn-primary" @click="togglePetForm">Add New Pet</button>
-   
+
    <!-- Form itself -->
    <b-form @submit.prevent="handleSubmit" v-if="showPetForm">
-      
+
       <!-- Pet's name -->
       <b-form-group
         id="input-group-1"
@@ -26,7 +29,7 @@
 
       </b-form-group>
 
-      
+
       <!-- Select With Species (Cats/Dogs) -->
       <b-form-group id="input-group-3" label="Species:" label-for="input-3">
         <b-form-select
@@ -53,7 +56,7 @@
         ></b-form-input>
 
       </b-form-group>
-      
+
       <!-- Buttons -->
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
@@ -65,7 +68,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
@@ -78,33 +81,39 @@ export default {
    age : 0,
    species : null,
    },
-   } 
+   }
+  },
+
+  computed: {
+  ...mapGetters([
+  'animalsCount'
+  ]),
   },
 
   methods: {
   ...mapActions([
-  'addPet'  
-  ]),  
-  togglePetForm() { 
+  'addPet'
+  ]),
+  togglePetForm() {
   this.showPetForm = !this.showPetForm; //toggles a boolean
   },
   handleSubmit() {
-  let { species, age, name } = this.formData;  
+  let { species, age, name } = this.formData;
   let payload = {
   species,
   pet : {
   name,
   age
   },
-  };  
+  };
   this.addPet(payload);
-  
+
   //Reset Form After Submit
   this.formData = {
   name : '',
   age : 0,
-  species : null,  
-  }; 
+  species : null,
+  };
 
   }
   },
